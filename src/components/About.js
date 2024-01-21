@@ -7,45 +7,37 @@ class About extends React.Component {
     super();
     this.state = {
       expanded: true,
-      activeKey: "1"
+      activeKey: "1",
     };
     this.handleSelect = this.handleSelect.bind(this);
   }
   handleSelect(eventKey) {
     this.setState({
-      activeKey: eventKey
+      activeKey: eventKey,
     });
   }
   render() {
-    const one = (
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod temporla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-      </p>
-    );
-    const two = (
-      <p>
-       Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
-      </p>
-    );
-
-   
-
     return (
       <div id="about">
         <FadeInSection>
           <div className="section-header ">
-            <span className="section-title">about us</span>
+            <span className="section-title">About Us</span>
           </div>
           <div className="about-content">
             <div className="about-description">
-            <p>
-       Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
-       Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
-       Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor </p>
-           
+              <p>
+                WiseHire assistant aims to revolutionize the way businesses
+                discover top talent and modernize the hiring process. WiseHire
+                is dedicated to making candidate assessment more efficient and
+                recruitment more effective. 
+                <p></p>
+                <p>
+                   
+                   Start by submiting your candidates CV’s to unlock new possibilites for your team.</p>
+              </p>
             </div>
             <div className="about-image">
-              <img alt="cat" src={"/assets/angy.png"} />
+              <img alt="aboutusimage" src={"/assets/aboutus.jpg"} />
             </div>
           </div>
         </FadeInSection>

@@ -5,7 +5,7 @@
   text-align: center;
   margin: auto;
   max-width: 1000px;
-  padding-top: 200px;
+  padding-top: 70px;
   min-height: 100vh;
 }
 
@@ -28,7 +28,7 @@
   font-family: "NTR", sans-serif;
   color: var(--green-bright);
   font-weight: bold;
-  font-size: 86px;
+  font-size: 70px;
 }
 
 .intro-subtitle {

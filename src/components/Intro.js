@@ -25,14 +25,16 @@ class Intro extends React.Component {
         
           <span className="intro-title">
             
-            <span className="intro-name">{"WISEHIRE"}</span>
+            <span className="intro-name">{"WISEHIRE ASSISTANT"}</span>
             
           </span>
         
         <FadeInSection>
-          <div className="intro-subtitle">lorem ipsum</div>
+          {/*<div className="intro-subtitle">Elevate Your Recruitment Game with AI</div>*/}
           <div className="intro-desc">
-            lorem ipsum
+          Step into the future of recruitment with our AI-powered assistant.Revolutionize the way you hire by letting our smart system analyze resumes and enhance your hiring process.Upload your CV now and discover your perfect match!
+
+
           </div>
           <a
             className="intro-contact"
