@@ -32,7 +32,7 @@ class Footer extends React.Component {
          
           </div>
           <div className="about-image">
-            <img alt="cat" src={"/assets/angy.png"} />
+            <img alt="getstartedimage" src={"/assets/get.jpg"} />
           </div>
         </div>
       </FadeInSection>
