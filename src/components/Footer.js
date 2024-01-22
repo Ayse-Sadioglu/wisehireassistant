@@ -21,7 +21,7 @@ class Footer extends React.Component {
       <div id="about">
       <FadeInSection>
         <div className="section-header ">
-          <span className="section-title">Footer tarzi bir yer olacak resim falan konulailir resim kaldiriladabilir</span>
+          <span className="section-title">Get Started</span>
         </div>
         <div className="about-content">
           <div className="about-description">

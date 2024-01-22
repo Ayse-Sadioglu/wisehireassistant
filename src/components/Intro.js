@@ -23,6 +23,8 @@ class Intro extends React.Component {
       <div id="intro">
         <FractalTree></FractalTree>
         
+
+        
           <span className="intro-title">
             
             <span className="intro-name">{"WISE WAY OF HIRING"}</span>
