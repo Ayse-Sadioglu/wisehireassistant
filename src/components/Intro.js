@@ -25,7 +25,7 @@ class Intro extends React.Component {
         
           <span className="intro-title">
             
-            <span className="intro-name">{"WISEHIRE ASSISTANT"}</span>
+            <span className="intro-name">{"WISE WAY OF HIRING"}</span>
             
           </span>
         
