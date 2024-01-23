@@ -1,1 +1,1 @@
-fırst run `$npm install` then `$npm start`
+first run `$npm install` then `$npm start`
