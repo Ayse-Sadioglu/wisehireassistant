@@ -1,4 +1,5 @@
-How to run: 
+### How to run: 
+
 `$pip install pyresparser` 
 for nlp operations 
 `$python -m spacy download en_core_web_sm`
