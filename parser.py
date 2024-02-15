@@ -7,44 +7,17 @@ file_path = r"C:\Users\ayses\Desktop\pyres\OmkarResume.pdf"  # Change this to th
 
 try:
     data = ResumeParser(file_path).get_extracted_data()
-    print("College Name:")
-    print(data['college_name'])
-    print("\n\n")
-
-    print("Company Names:")
-    print(data['company_names'])
-    print("\n\n")
-
-    print("Designation:")
-    print(data['designation'])
-    print("\n\n")
-
-    print("Degree:")
-    print(data['degree'])
-    print("\n\n")
-
-    print("Email:")
-    print(data['email'])
-    print("\n\n")
-
-    print("Mobile Number:")
-    print(data['mobile_number'])
-    print("\n\n")
-
-    print("Name:")
-    print(data['name'])
-    print("\n\n")
-
-    print("Number of Pages:")
-    print(data['no_of_pages'])
-    print("\n\n")
-
-    print("Total Experience:")
-    print(data['total_experience'])
-    print("\n\n")
-
-    print("Skills:")
-    print(data['skills'])
+    
+    print("Name:", data["name"])
+    print("Email:", data["email"])
+    print("Mobile Number:", data["mobile_number"])
+    print("Skills:", data["skills"])
+    print("College Name:", data["college_name"])
+    print("Degree:", data["degree"])
+    print("Designation:", data["designation"])
+    print("Company Names:", data["company_names"])
+    print("No Of Pages:", data["no_of_pages"])
+    print("Total Experience:", data["total_experience"])
 
 except Exception as e:
     print(f"Error: {e}")
