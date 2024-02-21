@@ -1,4 +1,4 @@
-#WiseHireAssistant
+# WiseHireAssistant
 
 ## Getting Started
 
