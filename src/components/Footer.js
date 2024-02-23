@@ -2,6 +2,7 @@ import React from "react";
 import "../styles/Footer.css";
 import FadeInSection from "./FadeInSection";
 
+
 class Footer extends React.Component {
   constructor() {
     super();
@@ -21,14 +22,17 @@ class Footer extends React.Component {
       <div id="about">
       <FadeInSection>
         <div className="section-header ">
-          <span className="section-title">Get Started</span>
+          <span className="section-title">Create  a Position</span>
         </div>
         <div className="about-content">
-          <div className="about-description">
+          <div className="about-description" style={{ textAlign: "center" }}>
           <p>
-     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
-     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
-     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor </p>
+          Start by creating a position to compare your candidates 
+     
+      </p>
+      <button onClick={() => alert("Button clicked!")}style={{ color: "black", height: "50px", width: "300px" , marginTop: "20px"}}>
+                Post Job
+              </button>
          
           </div>
           <div className="about-image">
