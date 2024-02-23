@@ -23,7 +23,7 @@ class NavBar extends React.Component {
             
             <Nav className="ml-auto">
              
-              <Nav.Link href="https://github.com" target="_blank">
+              <Nav.Link href="https://github.com/Ayse-Sadioglu/wisehireassistant" target="_blank">
                 <GitHubIcon style={{ fontSize: 19 }}></GitHubIcon>
               </Nav.Link>
             
