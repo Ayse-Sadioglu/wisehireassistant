@@ -38,11 +38,7 @@ class Intro extends React.Component {
 
 
           </div>
-          <a
-            className="intro-contact"
-          >
-            {" CV YUKLE"}
-          </a>
+          
         </FadeInSection>
       </div>
     );
