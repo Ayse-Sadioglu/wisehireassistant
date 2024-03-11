@@ -1,0 +1,104 @@
+#PostJob {
+  min-height: 50vh;
+  margin: auto;
+  max-width: 1000px;
+  padding-top: 100px;
+}
+
+.PostJob-description ul {
+  padding-top: 20px;
+  list-style-type: none;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(150px, 10px));
+}
+
+.PostJob-description li {
+  position: relative;
+  padding-left: 20px;
+  font-size: 18px;
+  color: var(--slate);
+}
+
+.PostJob-description li::before {
+  content: "▹    ";
+  color: var(--green-bright);
+  position: absolute;
+  left: 0;
+}
+
+.PostJob-content {
+  display: flex;
+  flex-direction: row;
+}
+
+.PostJob-description {
+  font-family: "NTR", sans-serif;
+  color: var(--slate);
+  max-width: 600px;
+  font-size: 22px;
+  text-align: justify;
+  margin: 0;
+}
+
+.PostJob-description a,
+.PostJob-description b {
+  font-size: 21px;
+  font-weight: bold;
+}
+
+.PostJob-image {
+  padding-left: 40px;
+}
+
+.PostJob-image img {
+  max-width: 400px;
+  height: auto;
+  border-radius: 10px;
+  margin-left: 30px;
+  box-shadow: 6px 13px 23px -5px rgba(0, 0, 0, 0.46);
+  border: none;
+}
+
+@media only screen and (max-width: 788px) {
+  .PostJob
+-image img {
+    max-width: 200px;
+  }
+}
+
+.PostJob-image:hover {
+  transform: translateY(-7px);
+}
+
+@media only screen and (max-width: 600px) {
+  #PostJob
+ {
+    height: unset;
+    padding-left: unset;
+    padding-right: unset;
+    padding-top: 30%;
+  }
+
+  .PostJob
+-description {
+    font-size: 18px;
+    text-align: justify;
+  }
+
+  .PostJob
+-description a,
+  .PostJob
+-description b {
+    font-size: 17px;
+  }
+
+  .PostJob
+-image img {
+    display: none;
+  }
+
+  .PostJob
+-content {
+    display: unset;
+  }
+}

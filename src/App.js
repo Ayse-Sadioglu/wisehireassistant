@@ -1,6 +1,6 @@
 import React from "react";
 import Intro from "./components/Intro";
-import Footer from "./components/Footer";
+import PostJob from "./components/PostJob";
 import About from "./components/About";
 import Credits from "./components/Credits";
 import NavBar from "./components/NavBar";
@@ -17,7 +17,7 @@ function App() {
       <div id="content">
         <Intro></Intro>
         <About></About>
-        <Footer></Footer>
+        <PostJob></PostJob>
         <OpenPositions></OpenPositions>
         
         <Credits></Credits>

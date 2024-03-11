@@ -1,9 +1,9 @@
 import React from "react";
-import "../styles/Footer.css";
+import "../styles/PostJob.css";
 import FadeInSection from "./FadeInSection";
 import Modal from "react-modal";
 
-class Footer extends React.Component {
+class PostJob extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -55,30 +55,26 @@ class Footer extends React.Component {
 
   render() {
     return (
-      <div id="about">
+      <div id="PostJob">
         <FadeInSection>
           <div className="section-header">
             <span className="section-title">Create a Position</span>
           </div>
-          <div className="about-content">
-            <div className="about-description" style={{ textAlign: "center" }}>
+          <div className="PostJob-content">
+            <div className="PostJob-description" style={{ textAlign: "center" }}>
               <p>Start by creating a position to compare your candidates</p>
               <button onClick={this.openModal} style={{ color: "black", height: "50px", width: "300px", marginTop: "20px" }}>
                 Post Job
               </button>
             </div>
-            <div className="about-image">
+            <div className="PostJob-image">
               <img alt="getstartedimage" src={"/assets/get.jpg"} />
             </div>
           </div>
         </FadeInSection>
 
         {/* Modal for the form */}
-        <Modal isOpen={this.state.isModalOpen} onRequestClose={this.closeModal} style={{
-  overlay: {
-    backgroundColor: 'rgba(0, 0, 0, 0.5)'
-  },
-  content: {
+        <Modal isOpen={this.state.isModalOpen} onRequestClose={this.closeModal} style={{overlay: {backgroundColor: 'rgba(0, 0, 0, 0.5)'},content: {
     width: '400px',
     margin: 'auto',
     marginTop: '50px',
@@ -117,4 +113,4 @@ class Footer extends React.Component {
   }
 }
 
-export default Footer;
+export default PostJob;
