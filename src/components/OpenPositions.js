@@ -31,35 +31,39 @@ class OpenPositions extends React.Component {
           <span className="section-title">Open Positions</span>
         </div>
 
-        <div className="openpositions-container">
-          <ul className="openpositions-grid">
-            {positions.map((position, i) => (
-              <FadeInSection key={i} delay={`${i + 1}00ms`}>
-                <li className="openpositions-card">
-                  <div className="card-header">
-                    <div className="folder-icon">
-                      <FolderOpenRoundedIcon style={{ fontSize: 35 }} />
+        <div className="openpositions-container" style={{ fontSize: 25 }} >
+          {positions.length === 0 ? (
+            <p>There are currently no positions open            </p>
+          ) : (
+            <ul className="openpositions-grid">
+              {positions.map((position, i) => (
+                <FadeInSection key={i} delay={`${i + 1}00ms`}>
+                  <li className="openpositions-card">
+                    <div className="card-header">
+                      <div className="folder-icon">
+                        <FolderOpenRoundedIcon style={{ fontSize: 35 }} />
+                      </div>
                     </div>
-                  </div>
-                  <div className="custom-card-title">
-                    {position.jobTitle} @ {position.companyName}
-                  </div>
-                  <div className="custom-card-desc" style={{ color: '#b4eba5' }}>
-                    Salary:
-                  </div>
-                  <div className="custom-card-tech" style={{ color: 'white' }}>
-                    {position.salary}
-                  </div>
-                  <div className="custom-card-desc" style={{ color: '#b4eba5' }}>
-                    Job Description:
-                  </div>
-                  <div className="custom-card-tech" style={{ color: 'white' }}>
-                    {position.description}
-                  </div>
-                </li>
-              </FadeInSection>
-            ))}
-          </ul>
+                    <div className="custom-card-title">
+                      {position.jobTitle} @ {position.companyName}
+                    </div>
+                    <div className="custom-card-desc" style={{ color: '#b4eba5' }}>
+                      Annual Salary:
+                    </div>
+                    <div className="custom-card-tech" style={{ color: 'white' }}>
+                      {position.salary}
+                    </div>
+                    <div className="custom-card-desc" style={{ color: '#b4eba5' }}>
+                      Job Description:
+                    </div>
+                    <div className="custom-card-tech" style={{ color: 'white' }}>
+                      {position.description}
+                    </div>
+                  </li>
+                </FadeInSection>
+              ))}
+            </ul>
+          )}
         </div>
       </div>
     );
