@@ -45,6 +45,24 @@
   .folder-icon {
     color: var(--green-bright);
   }
+
+
+.custom-card-title {
+  font-size: 30px;
+  font-weight: bold;
+  color: #f0a49a; 
+}
+
+.custom-card-desc {
+  font-size: 25px;
+  color: #ffffff; 
+}
+
+.custom-card-tech {
+  font-size: 25px;
+  color: #fdfdfd; 
+}
+
   
   .github-icon {
     margin-top: 6px;

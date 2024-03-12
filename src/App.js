@@ -1,4 +1,6 @@
-import React from "react";
+// App.js
+
+import React, { useState } from "react";
 import Intro from "./components/Intro";
 import PostJob from "./components/PostJob";
 import About from "./components/About";
@@ -11,16 +13,21 @@ import "./styles/Global.css";
 import "rsuite/dist/styles/rsuite-default.css";
 
 function App() {
+  const [positions, setPositions] = useState([]);
+
+  const updatePositions = (newPosition) => {
+    setPositions((prevPositions) => [...prevPositions, newPosition]);
+  };
+
   return (
     <div className="App">
-      <NavBar></NavBar>
+      <NavBar />
       <div id="content">
-        <Intro></Intro>
-        <About></About>
-        <PostJob></PostJob>
-        <OpenPositions></OpenPositions>
-        
-        <Credits></Credits>
+        <Intro />
+        <About />
+        <PostJob updatePositions={updatePositions} />
+        <OpenPositions positions={positions} />
+        <Credits />
       </div>
     </div>
   );
