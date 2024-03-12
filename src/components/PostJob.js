@@ -110,7 +110,7 @@ class PostJob extends React.Component {
               padding: "20px",
               borderRadius: "8px",
               boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-              maxHeight: "60vh",
+              maxHeight: "70vh",
               backgroundColor: "#27374D",
               color: "#F9E8D9",
             },
