@@ -58,7 +58,11 @@ class OpenPositions extends React.Component {
                       {position.description}
                     </div>
                     <button className="upload-resume-button">
-                      Upload Resume
+                    See Details
+                    </button>
+
+                    <button className="upload-resume-button">
+                    Upload Resume
                     </button>
 
                     <button
