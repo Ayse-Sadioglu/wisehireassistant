@@ -1,5 +1,3 @@
-// OpenPositions.js
-
 import React from "react";
 import "../styles/OpenPositions.css";
 import FolderOpenRoundedIcon from "@material-ui/icons/FolderOpenRounded";
@@ -31,9 +29,9 @@ class OpenPositions extends React.Component {
           <span className="section-title">Open Positions</span>
         </div>
 
-        <div className="openpositions-container" style={{ fontSize: 25 }} >
+        <div className="openpositions-container" style={{ fontSize: 25 }}>
           {positions.length === 0 ? (
-            <p>There are currently no positions open            </p>
+            <p>There are currently no positions open</p>
           ) : (
             <ul className="openpositions-grid">
               {positions.map((position, i) => (
@@ -59,6 +57,18 @@ class OpenPositions extends React.Component {
                     <div className="custom-card-tech" style={{ color: 'white' }}>
                       {position.description}
                     </div>
+                    <button className="upload-resume-button">
+                      Upload Resume
+                    </button>
+
+                    <button
+                       className="upload-resume-button delete-button"
+                       // TODO: Implement delete position
+                    >
+                      Delete Position
+                    </button>
+                    
+                   
                   </li>
                 </FadeInSection>
               ))}
