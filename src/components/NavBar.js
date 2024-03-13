@@ -15,25 +15,20 @@ class NavBar extends React.Component {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link href="#intro">Home</Nav.Link>
-              <Nav.Link href="#about">About</Nav.Link>
-              
-               
+              <Nav.Link href="#intro" className="nav-link">Home</Nav.Link>
+              <Nav.Link href="#about" className="nav-link">About</Nav.Link>
+              <Nav.Link href="#PostJob" className="nav-link">Post Job</Nav.Link>
+              <Nav.Link href="#openpositions" className="nav-link">Open Positions</Nav.Link>
             </Nav>
             
             <Nav className="ml-auto">
-              
               <Nav.Link href="https://github.com/Ayse-Sadioglu/wisehireassistant" target="_blank">
-                <GitHubIcon style={{ fontSize: 19 }}></GitHubIcon>
+                <GitHubIcon style={{ fontSize: 19 }} />
               </Nav.Link>
-            
             </Nav> 
-           
           </Navbar.Collapse>
         </Container>
-        
       </Navbar>
-       //burasi ekstra gerek olmadigi halde cikarilabilir
     );
   }
 }

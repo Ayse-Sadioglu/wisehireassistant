@@ -20,35 +20,8 @@ class OpenPositions extends React.Component {
     });
   }
 
-  handleUploadResume(position) {
-    // Implement the logic for uploading a resume for the selected position
-    console.log(`Uploading resume for ${position}`);
-  }
-
   render() {
-    const positions = {
-      "Software Engineer @Google": {
-        desc: "Job Description",
-        skills: "Java, Android Studio",
-        open: "",
-      },
-      "HR @Google": {
-        desc: "Job Description",
-        skills: "Python",
-        open: "",
-      },
-      // Add new positions here
-      "New Position @Company1": {
-        desc: "New Job Description 1",
-        skills: "React, JavaScript",
-        open: "",
-      },
-      "New Position @Company2": {
-        desc: "New Job Description 2",
-        skills: "React, JavaScript",
-        open: "",
-      },
-    };
+    const { positions } = this.props;
 
     return (
       <div id="openpositions">
@@ -56,31 +29,51 @@ class OpenPositions extends React.Component {
           <span className="section-title">Open Positions</span>
         </div>
 
-        <div className="openpositions-container">
-          <ul className="openpositions-grid">
-            {Object.keys(positions).map((key, i) => (
-              <FadeInSection key={key} delay={`${i + 1}00ms`}>
-                <li className="openpositions-card">
-                  <div className="card-header">
-                    <div className="folder-icon">
-                      <FolderOpenRoundedIcon
-                        style={{ fontSize: 35 }}
-                      ></FolderOpenRoundedIcon>
+        <div className="openpositions-container" style={{ fontSize: 25 }}>
+          {positions.length === 0 ? (
+            <p>There are currently no positions open</p>
+          ) : (
+            <ul className="openpositions-grid">
+              {positions.map((position, i) => (
+                <FadeInSection key={i} delay={`${i + 1}00ms`}>
+                  <li className="openpositions-card">
+                    <div className="card-header">
+                      <div className="folder-icon">
+                        <FolderOpenRoundedIcon style={{ fontSize: 35 }} />
+                      </div>
                     </div>
-                  </div>
-                  <div className="card-title">{key}</div>
-                  <div className="card-desc">{positions[key]["desc"]}</div>
-                  <div className="card-tech">{positions[key]["skills"]}</div>
-                  <button
-                    onClick={() => this.handleUploadResume(key)}
-                    className="upload-resume-button"
-                  >
-                    Upload Resume
-                  </button>
-                </li>
-              </FadeInSection>
-            ))}
-          </ul>
+                    <div className="custom-card-title">
+                      {position.jobTitle} @ {position.companyName}
+                    </div>
+                    <div className="custom-card-desc" style={{ color: '#b4eba5' }}>
+                      Annual Salary:
+                    </div>
+                    <div className="custom-card-tech" style={{ color: 'white' }}>
+                      {position.salary}
+                    </div>
+                    <div className="custom-card-desc" style={{ color: '#b4eba5' }}>
+                      Job Description:
+                    </div>
+                    <div className="custom-card-tech" style={{ color: 'white' }}>
+                      {position.description}
+                    </div>
+                    <button className="upload-resume-button">
+                      Upload Resume
+                    </button>
+
+                    <button
+                       className="upload-resume-button delete-button"
+                       // TODO: Implement delete position
+                    >
+                      Delete Position
+                    </button>
+                    
+                   
+                  </li>
+                </FadeInSection>
+              ))}
+            </ul>
+          )}
         </div>
       </div>
     );
