@@ -6,18 +6,16 @@
 
 Ensure you have Node.js and npm installed on your machine. If not, you can download and install them from [Node.js official website](https://nodejs.org/).
 
-### Installation
+## Installation
 
-1. Open your terminal and navigate to the project directory.
-2. Run the following command to install the necessary dependencies:
+To install the required dependencies, run:
 
 ```bash
- $ npm install
+pip install -r requirements.txt
 ```
+## Usage
 
-### Usage
-
-Once the dependencies are installed, start the project using the following command:
+To run the project, execute the following command:
 
 ```bash
-$ npm start
+python main.py
