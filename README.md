@@ -11,7 +11,7 @@ Ensure you have Node.js and npm installed on your machine. If not, you can downl
 To install the required dependencies, run:
 
 ```bash
-npm i
+npm i --force
 ```
 ## Usage
 
