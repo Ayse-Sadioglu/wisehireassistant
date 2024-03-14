@@ -11,11 +11,11 @@ Ensure you have Node.js and npm installed on your machine. If not, you can downl
 To install the required dependencies, run:
 
 ```bash
-pip install -r requirements.txt
+npm i
 ```
 ## Usage
 
 To run the project, execute the following command:
 
 ```bash
-python main.py
+npm start
