@@ -42,7 +42,7 @@ const OpenPositions = ({ positions }) => {
       name: "Anom",
       Rank: "%19",
       ConsistencyInfo: "consistent",
-      Resume: "resume.pdf",
+      Resume: "resume.pdf",//change this type to pdf
     },
   ];
 

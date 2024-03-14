@@ -1,5 +1,3 @@
-// App.js
-
 import React, { useState } from "react";
 import Intro from "./components/Intro";
 import PostJob from "./components/PostJob";
