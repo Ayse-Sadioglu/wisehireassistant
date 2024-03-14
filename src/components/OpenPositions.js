@@ -1,87 +1,164 @@
-import React from "react";
+import React, { useState } from "react";
 import "../styles/OpenPositions.css";
 import FolderOpenRoundedIcon from "@material-ui/icons/FolderOpenRounded";
 import FadeInSection from "./FadeInSection";
-import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import Modal from "react-modal";
 
-class OpenPositions extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      expanded: true,
-      activeKey: "1",
-    };
-    this.handleSelect = this.handleSelect.bind(this);
-  }
 
-  handleSelect(eventKey) {
-    this.setState({
-      activeKey: eventKey,
-    });
-  }
-
-  render() {
-    const { positions } = this.props;
-
-    return (
-      <div id="openpositions">
-        <div className="section-header">
-          <span className="section-title">Open Positions</span>
-        </div>
-
-        <div className="openpositions-container" style={{ fontSize: 25 }}>
-          {positions.length === 0 ? (
-            <p>There are currently no positions open</p>
-          ) : (
-            <ul className="openpositions-grid">
-              {positions.map((position, i) => (
-                <FadeInSection key={i} delay={`${i + 1}00ms`}>
-                  <li className="openpositions-card">
-                    <div className="card-header">
-                      <div className="folder-icon">
-                        <FolderOpenRoundedIcon style={{ fontSize: 35 }} />
-                      </div>
-                    </div>
-                    <div className="custom-card-title">
-                      {position.jobTitle} @ {position.companyName}
-                    </div>
-                    <div className="custom-card-desc" style={{ color: '#b4eba5' }}>
-                      Annual Salary:
-                    </div>
-                    <div className="custom-card-tech" style={{ color: 'white' }}>
-                      {position.salary}
-                    </div>
-                    <div className="custom-card-desc" style={{ color: '#b4eba5' }}>
-                      Job Description:
-                    </div>
-                    <div className="custom-card-tech" style={{ color: 'white' }}>
-                      {position.description}
-                    </div>
-                    <button className="upload-resume-button">
-                    See Details
-                    </button>
-
-                    <button className="upload-resume-button">
-                    Upload Resume
-                    </button>
-
-                    <button
-                       className="upload-resume-button delete-button"
-                       // TODO: Implement delete position
-                    >
-                      Delete Position
-                    </button>
-                    
-                   
-                  </li>
-                </FadeInSection>
-              ))}
-            </ul>
-          )}
-        </div>
-      </div>
-    );
-  }
+// Function to generate rows for the table
+function createData(name, rank, ConsistencyInfo, Resume) {
+  return { name, rank, ConsistencyInfo, Resume };
 }
+
+const OpenPositions = ({ positions }) => {
+  const [showModal, setShowModal] = useState(false);
+  const [selectedPosition, setSelectedPosition] = useState(null);
+
+  const openModal = (position) => {
+    setSelectedPosition(position);
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setSelectedPosition(null);
+    setShowModal(false);
+  };
+
+//Dummy data
+//TODO:Change with real data
+  const data = [
+    { name: "Anom", Rank: '%19', ConsistencyInfo: "consistent",Resume:"resume.pdf" },
+   
+]
+
+  return (
+    <div id="openpositions">
+      <div className="section-header">
+        <span className="section-title">Open Positions</span>
+      </div>
+
+      <div className="openpositions-container" style={{ fontSize: 25 }}>
+        {positions.length === 0 ? (
+          <p>There are currently no positions open</p>
+        ) : (
+          <ul className="openpositions-grid">
+            {positions.map((position, i) => (
+              <FadeInSection key={i} delay={`${i + 1}00ms`}>
+                <li className="openpositions-card">
+                  <div className="card-header">
+                    <div className="folder-icon">
+                      <FolderOpenRoundedIcon style={{ fontSize: 35 }} />
+                    </div>
+                  </div>
+                  <div className="custom-card-title">
+                    {position.jobTitle} @ {position.companyName}
+                  </div>
+                  <div
+                    className="custom-card-desc"
+                    style={{ color: "#b4eba5" }}
+                  >
+                    Annual Salary:
+                  </div>
+                  <div className="custom-card-tech" style={{ color: "white" }}>
+                    {position.salary}
+                  </div>
+                  <div
+                    className="custom-card-desc"
+                    style={{ color: "#b4eba5" }}
+                  >
+                    Job Description:
+                  </div>
+                  <div className="custom-card-tech" style={{ color: "white" }}>
+                    {position.description}
+                  </div>
+                  <button
+                    className="upload-resume-button"
+                    onClick={() => openModal(position)}
+                  >
+                    See Details
+                  </button>
+                  <button className="upload-resume-button">
+                    Upload Resume
+                  </button>
+                  <button
+                    className="upload-resume-button delete-button"
+                    // TODO: Implement delete position
+                  >
+                    Delete Position
+                  </button>
+                </li>
+              </FadeInSection>
+            ))}
+          </ul>
+        )}
+      </div>
+
+      {/* Modal for details */}
+      <Modal
+        isOpen={showModal}
+        onRequestClose={closeModal}
+        style={{
+          overlay: { backgroundColor: "rgba(0, 0, 0, 0.5)" },
+          content: {
+            width: "800px",
+            margin: "auto",
+            marginTop: "50px",
+            padding: "20px",
+            borderRadius: "8px",
+            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+            maxHeight: "100vh",
+            backgroundColor: "#fff",
+            color: "#000",
+          },
+        }}
+      >
+        <h2
+          style={{
+            color: "#27374D",
+            marginBottom: "10px",
+          }}
+        >
+          Candidate Details for {selectedPosition?.jobTitle} @{" "}
+          {selectedPosition?.companyName}
+        </h2>
+        <div className="detailstable">
+            <table>
+                <tr>
+                    <th>Name</th>
+                    <th>Rank</th>
+                    <th>Consistency Information</th>
+                    <th>Resume </th>
+                </tr>
+                {data.map((val, key) => {
+                    return (
+                        <tr key={key}>
+                            <td>{val.name}</td>
+                            <td>{val.Rank}</td>
+                            <td>{val.ConsistencyInfo}</td>
+                            <td>{val.Resume}</td>
+                        </tr>
+                    )
+                })}
+            </table>
+        </div>
+
+        <button
+          onClick={closeModal}
+          style={{
+            position: "absolute",
+            bottom: "20px",
+            right: "20px",
+            backgroundColor: "#27374D",
+            color: "#F9E8D9",
+
+            borderRadius: "5px",
+          }}
+        >
+          Close
+        </button>
+      </Modal>
+    </div>
+  );
+};
 
 export default OpenPositions;
