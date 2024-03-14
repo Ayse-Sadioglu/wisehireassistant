@@ -51,10 +51,19 @@ class PostJob extends React.Component {
 
   
   handleSubmit(event) {
+    event.preventDefault();
+  
+    // Check if any field is empty
+    if (!this.state.companyName || !this.state.jobTitle || !this.state.salary || !this.state.jobDescription) {
+      
+      alert("Please fill in all fields.");
+      return; // Stop form submission
+    }
+  
     // Perform any action you need with the form data
     console.log("Form submitted:", this.state);
   
-    // Call the updatePositions function to add the new position
+    
     this.props.updatePositions({
       companyName: this.state.companyName,
       jobTitle: this.state.jobTitle,
@@ -62,11 +71,8 @@ class PostJob extends React.Component {
       description: this.state.jobDescription,
     });
   
-    // Close the modal after submission and clear the form fields
+    
     this.closeModal();
-  
-    // Prevent the default form submission behavior
-    event.preventDefault();
   }
 
   render() {
