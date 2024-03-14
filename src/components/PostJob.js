@@ -49,29 +49,47 @@ class PostJob extends React.Component {
     this.setState({ [name]: value });
   }
 
-  
   handleSubmit(event) {
     event.preventDefault();
-  
+
     // Check if any field is empty
-    if (!this.state.companyName || !this.state.jobTitle || !this.state.salary || !this.state.jobDescription) {
-      
+    if (
+      !this.state.companyName ||
+      !this.state.jobTitle ||
+      !this.state.salary ||
+      !this.state.jobDescription
+    ) {
       alert("Please fill in all fields.");
       return; // Stop form submission
     }
-  
+
+    // Check if companyName, jobTitle, and jobDescription are text
+    if (
+      !/^[A-Za-z\s]+$/.test(this.state.companyName) ||
+      !/^[A-Za-z\s]+$/.test(this.state.jobTitle) ||
+      !/^[A-Za-z\s]+$/.test(this.state.jobDescription)
+    ) {
+      
+      alert("Company name, job title, and job description must be text only.");
+      return; // Stop form submission
+    }
+
+    // Check if salary is an integer
+    if (!Number.isInteger(Number(this.state.salary))) {
+      alert("Salary must be an integer.");
+      return; // Stop form submission
+    }
+
     // Perform any action you need with the form data
     console.log("Form submitted:", this.state);
-  
-    
+
     this.props.updatePositions({
       companyName: this.state.companyName,
       jobTitle: this.state.jobTitle,
       salary: this.state.salary,
       description: this.state.jobDescription,
     });
-  
-    
+
     this.closeModal();
   }
 
@@ -83,7 +101,10 @@ class PostJob extends React.Component {
             <span className="section-title">Create a Position</span>
           </div>
           <div className="PostJob-content">
-            <div className="PostJob-description" style={{ textAlign: "center" }}>
+            <div
+              className="PostJob-description"
+              style={{ textAlign: "center" }}
+            >
               <p>Start by creating a position to compare your candidates</p>
               <button
                 onClick={this.openModal}
@@ -122,9 +143,20 @@ class PostJob extends React.Component {
             },
           }}
         >
-          <form onSubmit={this.handleSubmit} style={{ display: "flex", flexDirection: "column" }}>
-            <label style={{ marginBottom: "10px", display: "flex", flexDirection: "column" }}>
-              <span style={{ marginBottom: "5px", color: "#F9E8D9" }}>Company Name:</span>
+          <form
+            onSubmit={this.handleSubmit}
+            style={{ display: "flex", flexDirection: "column" }}
+          >
+            <label
+              style={{
+                marginBottom: "10px",
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <span style={{ marginBottom: "5px", color: "#F9E8D9" }}>
+                Company Name:
+              </span>
               <input
                 type="text"
                 name="companyName"
@@ -133,8 +165,16 @@ class PostJob extends React.Component {
                 style={{ padding: "8px", borderRadius: "4px", color: "black" }}
               />
             </label>
-            <label style={{ marginBottom: "10px", display: "flex", flexDirection: "column" }}>
-              <span style={{ marginBottom: "5px", color: "#F9E8D9" }}>Job Title:</span>
+            <label
+              style={{
+                marginBottom: "10px",
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <span style={{ marginBottom: "5px", color: "#F9E8D9" }}>
+                Job Title:
+              </span>
               <input
                 type="text"
                 name="jobTitle"
@@ -143,8 +183,16 @@ class PostJob extends React.Component {
                 style={{ padding: "8px", borderRadius: "4px", color: "black" }}
               />
             </label>
-            <label style={{ marginBottom: "10px", display: "flex", flexDirection: "column" }}>
-              <span style={{ marginBottom: "5px", color: "#F9E8D9" }}>Salary:</span>
+            <label
+              style={{
+                marginBottom: "10px",
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <span style={{ marginBottom: "5px", color: "#F9E8D9" }}>
+                Salary:
+              </span>
               <input
                 type="text"
                 name="salary"
@@ -153,13 +201,26 @@ class PostJob extends React.Component {
                 style={{ padding: "8px", borderRadius: "4px", color: "black" }}
               />
             </label>
-            <label style={{ marginBottom: "10px", display: "flex", flexDirection: "column" }}>
-              <span style={{ marginBottom: "5px", color: "#F9E8D9" }}>Job Description:</span>
+            <label
+              style={{
+                marginBottom: "10px",
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <span style={{ marginBottom: "5px", color: "#F9E8D9" }}>
+                Job Description:
+              </span>
               <textarea
                 name="jobDescription"
                 value={this.state.jobDescription}
                 onChange={this.handleInputChange}
-                style={{ padding: "8px", borderRadius: "4px", height: "100px", color: "black" }}
+                style={{
+                  padding: "8px",
+                  borderRadius: "4px",
+                  height: "100px",
+                  color: "black",
+                }}
               />
             </label>
             <button
