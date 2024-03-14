@@ -66,8 +66,7 @@ class PostJob extends React.Component {
     // Check if companyName, jobTitle, and jobDescription are text
     if (
       !/^[A-Za-z\s]+$/.test(this.state.companyName) ||
-      !/^[A-Za-z\s]+$/.test(this.state.jobTitle) ||
-      !/^[A-Za-z\s]+$/.test(this.state.jobDescription)
+      !/^[A-Za-z\s]+$/.test(this.state.jobTitle) 
     ) {
       
       alert("Company name, job title, and job description must be text only.");

@@ -4,7 +4,6 @@ import FolderOpenRoundedIcon from "@material-ui/icons/FolderOpenRounded";
 import FadeInSection from "./FadeInSection";
 import Modal from "react-modal";
 
-
 // Function to generate rows for the table
 function createData(name, rank, ConsistencyInfo, Resume) {
   return { name, rank, ConsistencyInfo, Resume };
@@ -13,6 +12,7 @@ function createData(name, rank, ConsistencyInfo, Resume) {
 const OpenPositions = ({ positions }) => {
   const [showModal, setShowModal] = useState(false);
   const [selectedPosition, setSelectedPosition] = useState(null);
+  const [resumeFile, setResumeFile] = useState(null); // State to store the selected resume file
 
   const openModal = (position) => {
     setSelectedPosition(position);
@@ -22,14 +22,29 @@ const OpenPositions = ({ positions }) => {
   const closeModal = () => {
     setSelectedPosition(null);
     setShowModal(false);
+    setResumeFile(null); // Reset the selected resume file when closing the modal
   };
 
-//Dummy data
-//TODO:Change with real data
+  // Handle file input change
+  const handleFileChange = (event) => {
+    const file = event.target.files[0]; // Get the first file from the selected files
+    if (file && file.type === "application/pdf") {
+      setResumeFile(file); // Set the selected file if it's a PDF
+    } else {
+      alert("Please select a PDF file."); 
+    }
+  };
+
+  // Dummy data
+  // TODO: Change with real data
   const data = [
-    { name: "Anom", Rank: '%19', ConsistencyInfo: "consistent",Resume:"resume.pdf" },
-   
-]
+    {
+      name: "Anom",
+      Rank: "%19",
+      ConsistencyInfo: "consistent",
+      Resume: "resume.pdf",
+    },
+  ];
 
   return (
     <div id="openpositions">
@@ -77,9 +92,16 @@ const OpenPositions = ({ positions }) => {
                   >
                     See Details
                   </button>
-                  <button className="upload-resume-button">
+
+                  <label className="upload-resume-button">
                     Upload Resume
-                  </button>
+                    <input
+                      type="file"
+                      accept="application/pdf"
+                      onChange={handleFileChange}
+                      style={{ display: "none" }}
+                    />
+                  </label>
                   <button
                     className="upload-resume-button delete-button"
                     // TODO: Implement delete position
@@ -118,28 +140,28 @@ const OpenPositions = ({ positions }) => {
             marginBottom: "10px",
           }}
         >
-          Candidate Details for {selectedPosition?.jobTitle} @{" "}
+          Details for {selectedPosition?.jobTitle} @{" "}
           {selectedPosition?.companyName}
         </h2>
         <div className="detailstable">
-            <table>
-                <tr>
-                    <th>Name</th>
-                    <th>Rank</th>
-                    <th>Consistency Information</th>
-                    <th>Resume </th>
+          <table>
+            <tr>
+              <th>Name</th>
+              <th>Rank</th>
+              <th>Consistency Information</th>
+              <th>Resume </th>
+            </tr>
+            {data.map((val, key) => {
+              return (
+                <tr key={key}>
+                  <td>{val.name}</td>
+                  <td>{val.Rank}</td>
+                  <td>{val.ConsistencyInfo}</td>
+                  <td>{val.Resume}</td>
                 </tr>
-                {data.map((val, key) => {
-                    return (
-                        <tr key={key}>
-                            <td>{val.name}</td>
-                            <td>{val.Rank}</td>
-                            <td>{val.ConsistencyInfo}</td>
-                            <td>{val.Resume}</td>
-                        </tr>
-                    )
-                })}
-            </table>
+              );
+            })}
+          </table>
         </div>
 
         <button
@@ -150,7 +172,6 @@ const OpenPositions = ({ positions }) => {
             right: "20px",
             backgroundColor: "#27374D",
             color: "#F9E8D9",
-
             borderRadius: "5px",
           }}
         >
