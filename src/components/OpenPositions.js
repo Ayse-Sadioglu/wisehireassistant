@@ -1,18 +1,36 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/OpenPositions.css";
 import FolderOpenRoundedIcon from "@material-ui/icons/FolderOpenRounded";
 import FadeInSection from "./FadeInSection";
 import Modal from "react-modal";
+import axios from 'axios'; // HTTP requests can made by using axios.
 
 // Function to generate rows for the table
 function createData(name, rank, ConsistencyInfo, Resume) {
   return { name, rank, ConsistencyInfo, Resume };
 }
 
-const OpenPositions = ({ positions }) => {
+const OpenPositions = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedPosition, setSelectedPosition] = useState(null);
   const [resumeFile, setResumeFile] = useState(null); // State to store the selected resume file
+  const [positions, setPositions] = useState([]); // State to store positions data
+
+  // This useEffect hook is used to fetch positions when the component mounts
+  useEffect(() => {
+    fetchPositions();
+  }, []);
+
+  const fetchPositions = () => {
+    // GET request to the backend API
+    axios.get("/api/position/getAllPositions")
+      .then((response) => {
+        setPositions(response.data.positions);
+      })
+      .catch((error) => {
+        console.error("Error fetching positions:", error);
+      });
+  };
 
   const openModal = (position) => {
     setSelectedPosition(position);
@@ -24,6 +42,20 @@ const OpenPositions = ({ positions }) => {
     setShowModal(false);
     setResumeFile(null); // Reset the selected resume file when closing the modal
   };
+
+  /* TODO: Activate when delete buton is written
+  const deletePosition = (positionId) => {
+    axios.delete(`/api/position/deletePosition/${positionId}`)
+      .then((response) => {
+        console.log("Position deleted successfully");
+        fetchPositions(); // Refresh positions after deletion
+      })
+      .catch((error) => {
+        console.error("Error deleting position:", error);
+      });
+  };
+
+  */
 
   // Handle file input change
   const handleFileChange = (event) => {

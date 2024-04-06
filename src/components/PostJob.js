@@ -4,6 +4,7 @@ import React from "react";
 import "../styles/PostJob.css";
 import FadeInSection from "./FadeInSection";
 import Modal from "react-modal";
+import axios from 'axios'; // HTTP requests can made by using axios.
 
 class PostJob extends React.Component {
   constructor() {
@@ -86,9 +87,24 @@ class PostJob extends React.Component {
       companyName: this.state.companyName,
       jobTitle: this.state.jobTitle,
       salary: this.state.salary,
-      description: this.state.jobDescription,
+      jobDescription: this.state.jobDescription,
     });
 
+    // Sends POST request to the server
+    axios.post("/api/position/postPosition", {
+        companyName: this.state.companyName,
+        jobTitle: this.state.jobTitle,
+        salary: this.state.salary,
+        jobDescription: this.state.jobDescription,
+      })
+      .then((response) => {
+        // Updates state with posted position
+        this.setState({ postedPosition: response.data });
+      })
+      .catch((error) => {
+        console.error("Error posting position:", error);
+        alert("An error occurred while posting the position.");
+      });
     this.closeModal();
   }
 
