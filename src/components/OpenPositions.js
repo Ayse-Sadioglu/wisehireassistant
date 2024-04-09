@@ -6,13 +6,15 @@ import Modal from "react-modal";
 import axios from 'axios'; // HTTP requests can made by using axios.
 
 // Function to generate rows for the table
-function createData(name, rank, ConsistencyInfo, Resume) {
-  return { name, rank, ConsistencyInfo, Resume };
+function createData(name, rank, ConsistencyInfo) {
+  return { name, rank, ConsistencyInfo};
 }
 
 const OpenPositions = () => {
   const [showModal, setShowModal] = useState(false);
-  const [selectedPosition, setSelectedPosition] = useState(null);
+  const [showModalforDeletion, setShowModalforDeletion] = useState(false);
+  const [selectedPosition, setSelectedPosition] = useState(null); 
+  const [positionDetails, setPositionDetails] = useState(null);
   const [resumeFile, setResumeFile] = useState(null); // State to store the selected resume file
   const [positions, setPositions] = useState([]); // State to store positions data
 
@@ -22,7 +24,7 @@ const OpenPositions = () => {
   }, []);
 
   const fetchPositions = () => {
-    // GET request to the backend API
+    // GET request to the backend API to get all positions
     axios.get("/api/position/getAllPositions")
       .then((response) => {
         setPositions(response.data.positions);
@@ -32,21 +34,11 @@ const OpenPositions = () => {
       });
   };
 
-  const openModal = (position) => {
-    setSelectedPosition(position);
-    setShowModal(true);
-  };
-
-  const closeModal = () => {
-    setSelectedPosition(null);
-    setShowModal(false);
-    setResumeFile(null); // Reset the selected resume file when closing the modal
-  };
-
-  /* TODO: Activate when delete buton is written
   const deletePosition = (positionId) => {
+    // DELETE request to the backend API to  delete selected position
     axios.delete(`/api/position/deletePosition/${positionId}`)
       .then((response) => {
+        console.log("selected: " + positionId);
         console.log("Position deleted successfully");
         fetchPositions(); // Refresh positions after deletion
       })
@@ -55,15 +47,189 @@ const OpenPositions = () => {
       });
   };
 
-  */
+  const fetchPositionDetails = (positionId) => {
+    // GET request to the backend API to get details for selected position
+    axios.get('/api/details/getAllDetails', {
+        params: {
+            position_id: positionId
+        },
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then((response) => {
+        setPositionDetails(response.data.details);
+    })
+    .catch((error) => {
+        console.error("Error fetching position details:", error);
+    });
+};
+
+
+  const uploadResume = (file, position) => { 
+    // POST request to the backend API to upload resume
+    if (!file) { 
+      var popup = document.createElement("div");
+      popup.textContent = "Please select a pdf file!";
+      popup.style.width = "fit-content"; 
+      popup.style.margin = "auto";
+      popup.style.marginTop = "20px"; 
+      popup.style.padding = "20px";
+      popup.style.borderRadius = "8px";
+      popup.style.boxShadow = "0 4px 8px rgba(0, 0, 0, 0.1)";
+      popup.style.backgroundColor = "#ffffff"; 
+      popup.style.color = "#27374D"; 
+      popup.style.textAlign = "center";
+      popup.style.position = "fixed"; 
+      popup.style.top = "0"; 
+      popup.style.left = "50%";
+      popup.style.transform = "translateX(-50%)"; 
+      popup.style.zIndex = "9999";
+      document.body.appendChild(popup);
+      // Uses a timer to remove the pop-up after a certain period of time
+      setTimeout(function() {
+          document.body.removeChild(popup);
+      }, 5000); // 5000 miliseconds = 5 seconds
+      return;
+    }  
+    const formData = new FormData();
+    formData.append("file", file); 
+    axios.post("/api/resume/evaluate", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data"
+      }
+    })
+    .then(response => {
+      console.log("API response:", response.data);
+      // POST request to the backend API to calculate similarity score
+      axios.post("/api/similarity/calculateSimilarity", {
+        resume_json: response.data,
+        position_id: position.id
+      }, {
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+      .then(similarityResponse => {
+        console.log("Similarity calculation response:", similarityResponse.data.similarity_score + " "  + position.id);
+        // POST request to the backend API to save details
+        axios.post('/api/details/saveDetails', {
+            resume_json: response.data, 
+            position_id: position.id, 
+            similarityResponse: similarityResponse.data.similarity_score 
+        })
+        .then(response => {
+            console.log("Save details response:", response.data);
+        })
+        .catch(error => {
+            console.error("Error while saving details:", error);
+        }); 
+      })
+      .catch(similarityError => {
+        console.error("Similarity calculation error:", similarityError);
+      });
+      // Creates a custom pop-up div element
+      var popup = document.createElement("div");
+      popup.textContent = "The resume has been successfully uploaded and evaluated!";
+      popup.style.width = "fit-content"; 
+      popup.style.margin = "auto";
+      popup.style.marginTop = "20px"; 
+      popup.style.padding = "20px";
+      popup.style.borderRadius = "8px";
+      popup.style.boxShadow = "0 4px 8px rgba(0, 0, 0, 0.1)";
+      popup.style.backgroundColor = "#ffffff"; 
+      popup.style.color = "#27374D"; 
+      popup.style.textAlign = "center";
+      popup.style.position = "fixed"; 
+      popup.style.top = "0"; 
+      popup.style.left = "50%";
+      popup.style.transform = "translateX(-50%)"; 
+      popup.style.zIndex = "9999";
+      document.body.appendChild(popup);
+      // Uses a timer to remove the pop-up after a certain period of time
+      setTimeout(function() {
+          document.body.removeChild(popup);
+      }, 5000); // 5000 miliseconds = 5 seconds
+    })
+    .catch(error => {
+      console.error("Error uploading resume:", error);
+      var popup = document.createElement("div");
+      popup.textContent = "An error occurred while uploading the file!";
+      popup.style.width = "fit-content"; 
+      popup.style.margin = "auto";
+      popup.style.marginTop = "20px"; 
+      popup.style.padding = "20px";
+      popup.style.borderRadius = "8px";
+      popup.style.boxShadow = "0 4px 8px rgba(0, 0, 0, 0.1)";
+      popup.style.backgroundColor = "#ffffff"; 
+      popup.style.color = "#27374D"; 
+      popup.style.textAlign = "center";
+      popup.style.position = "fixed"; 
+      popup.style.top = "0"; 
+      popup.style.left = "50%";
+      popup.style.transform = "translateX(-50%)"; 
+      popup.style.zIndex = "9999";
+      document.body.appendChild(popup);
+      // Uses a timer to remove the pop-up after a certain period of time
+      setTimeout(function() {
+          document.body.removeChild(popup);
+      }, 5000); // 5000 miliseconds = 5 seconds
+    });
+  };
+
+  const openModal = (position) => {
+    setSelectedPosition(position);
+    fetchPositionDetails(position.id);
+    setShowModal(true);
+  };
+
+  const openModalforDeletion = (position) => {
+    setSelectedPosition(position);
+    setShowModalforDeletion(true);
+  };
+
+  const closeModal = () => {
+    setSelectedPosition(null);
+    setShowModal(false);
+    setResumeFile(null); // Reset the selected resume file when closing the modal
+    setPositionDetails(null);
+  };
+
+  const closeModalforDeletion = () => {
+    setSelectedPosition(null);
+    setShowModalforDeletion(false);
+  };
 
   // Handle file input change
-  const handleFileChange = (event) => {
+  const handleFileChange = (event, position) => {
     const file = event.target.files[0]; // Get the first file from the selected files
     if (file && file.type === "application/pdf") {
+      setSelectedPosition(position);
       setResumeFile(file); // Set the selected file if it's a PDF
+      console.log("position: " + position.id);
+      uploadResume(file, position);
     } else {
-      alert("Please select a PDF file."); 
+      var popup = document.createElement("div");
+      popup.textContent = "Please select a pdf file!";
+      popup.style.width = "fit-content"; 
+      popup.style.margin = "auto";
+      popup.style.marginTop = "20px"; 
+      popup.style.padding = "20px";
+      popup.style.borderRadius = "8px";
+      popup.style.boxShadow = "0 4px 8px rgba(0, 0, 0, 0.1)";
+      popup.style.backgroundColor = "#ffffff"; 
+      popup.style.color = "#27374D"; 
+      popup.style.textAlign = "center";
+      popup.style.position = "fixed"; 
+      popup.style.top = "0"; 
+      popup.style.left = "50%";
+      popup.style.transform = "translateX(-50%)"; 
+      popup.style.zIndex = "9999";
+      document.body.appendChild(popup);
+      // Uses a timer to remove the pop-up after a certain period of time
+      setTimeout(function() {
+          document.body.removeChild(popup);
+      }, 5000); // 5000 miliseconds = 5 seconds
     }
   };
 
@@ -71,10 +237,9 @@ const OpenPositions = () => {
   // TODO: Change with real data
   const data = [
     {
-      name: "Anom",
-      Rank: "%19",
-      ConsistencyInfo: "consistent",
-      Resume: "resume.pdf",//change this type to pdf
+      name: "empty",
+      Rank:  "empty",
+      ConsistencyInfo:  "empty",
     },
   ];
 
@@ -86,7 +251,7 @@ const OpenPositions = () => {
 
       <div className="openpositions-container" style={{ fontSize: 25 }}>
         {positions.length === 0 ? (
-          <p>There are currently no positions open</p>
+          <p>There are currently no positions open.</p>
         ) : (
           <ul className="openpositions-grid">
             {positions.map((position, i) => (
@@ -116,7 +281,7 @@ const OpenPositions = () => {
                     Job Description:
                   </div>
                   <div className="custom-card-tech" style={{ color: "white" }}>
-                    {position.description}
+                    {position.jobDescription}
                   </div>
                   <button
                     className="upload-resume-button"
@@ -130,13 +295,13 @@ const OpenPositions = () => {
                     <input
                       type="file"
                       accept="application/pdf"
-                      onChange={handleFileChange}
+                      onChange={(event) => handleFileChange(event, position)}
                       style={{ display: "none" }}
                     />
                   </label>
                   <button
                     className="upload-resume-button delete-button"
-                    // TODO: Implement delete position
+                    onClick={() => openModalforDeletion(position)}
                   >
                     Delete Position
                   </button>
@@ -195,7 +360,7 @@ const OpenPositions = () => {
             })}
           </table>
         </div>
-
+            
         <button
           onClick={closeModal}
           style={{
@@ -209,6 +374,62 @@ const OpenPositions = () => {
         >
           Close
         </button>
+      </Modal>
+
+      {/* Modal for confirmation of deletion */}
+      <Modal
+        isOpen={showModalforDeletion}
+        onRequestClose={closeModalforDeletion}
+        style={{
+          overlay: { backgroundColor: "rgba(0, 0, 0, 0.5)" },
+          content: {
+            width: "300px",
+            margin: "auto",
+            marginTop: "100px",
+            padding: "20px",
+            borderRadius: "8px",
+            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+            maxHeight: "50vh", 
+            backgroundColor: "#27374D",
+            color: "#fff",
+            textAlign: "center"
+          },
+        }}
+      >
+        <h2 style={{ color: "#f5f5f5", marginBottom: "40px", textAlign: "center" }}>
+          Do you confirm your deletion?
+        </h2>
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <button
+            onClick={() => {
+              deletePosition(selectedPosition?.id);
+              closeModalforDeletion();
+            }}
+            style={{
+              backgroundColor: "#90EE90",
+              color: "#27374D",
+              borderRadius: "5px",
+              padding: "10px 20px",
+              margin: "0 10px",
+              cursor: "pointer",
+            }}
+          >
+            Yes
+          </button>
+          <button
+            onClick={closeModalforDeletion}
+            style={{
+              backgroundColor: "#F0A49A",
+              color: "#27374D",
+              borderRadius: "5px",
+              padding: "10px 20px",
+              margin: "0 10px",
+              cursor: "pointer",
+            }}
+          >
+            No
+          </button>
+        </div>
       </Modal>
     </div>
   );
