@@ -6,8 +6,8 @@ import Modal from "react-modal";
 import axios from 'axios'; // HTTP requests can made by using axios.
 
 // Function to generate rows for the table
-function createData(name, rank, ConsistencyInfo, Resume) {
-  return { name, rank, ConsistencyInfo, Resume };
+function createData(name, rank, ConsistencyInfo) {
+  return { name, rank, ConsistencyInfo};
 }
 
 const OpenPositions = () => {
@@ -49,18 +49,21 @@ const OpenPositions = () => {
 
   const fetchPositionDetails = (positionId) => {
     // GET request to the backend API to get details for selected position
-    axios.get(`/api/details/getAllDetails`, {
-      
-        position_id: positionId
-        
-      })
-      .then((response) => {
+    axios.get('/api/details/getAllDetails', {
+        params: {
+            position_id: positionId
+        },
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then((response) => {
         setPositionDetails(response.data.details);
-      })
-      .catch((error) => {
+    })
+    .catch((error) => {
         console.error("Error fetching position details:", error);
-      });
-  };
+    });
+};
 
 
   const uploadResume = (file, position) => { 
@@ -110,7 +113,17 @@ const OpenPositions = () => {
       .then(similarityResponse => {
         console.log("Similarity calculation response:", similarityResponse.data.similarity_score + " "  + position.id);
         // POST request to the backend API to save details
-        
+        axios.post('/api/details/saveDetails', {
+            resume_json: response.data, 
+            position_id: position.id, 
+            similarityResponse: similarityResponse.data.similarity_score 
+        })
+        .then(response => {
+            console.log("Save details response:", response.data);
+        })
+        .catch(error => {
+            console.error("Error while saving details:", error);
+        }); 
       })
       .catch(similarityError => {
         console.error("Similarity calculation error:", similarityError);
@@ -224,10 +237,9 @@ const OpenPositions = () => {
   // TODO: Change with real data
   const data = [
     {
-      name: "Anom",
-      Rank: "%19",
-      ConsistencyInfo: "consistent",
-      Resume: "resume.pdf",//change this type to pdf
+      name: "empty",
+      Rank:  "empty",
+      ConsistencyInfo:  "empty",
     },
   ];
 
