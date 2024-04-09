@@ -33,7 +33,7 @@ class About extends React.Component {
                 <p></p>
                 <p>
                    
-                   Start by submiting your candidates CV’s to unlock new possibilites for your team.</p>
+                   Start by submiting CVs of your candidates to unlock new possibilites for your team.</p>
               </p>
             </div>
             <div className="about-image">

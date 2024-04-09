@@ -90,7 +90,7 @@ class PostJob extends React.Component {
       jobDescription: this.state.jobDescription,
     });
 
-    // Sends POST request to the server
+    // Sends POST request to the server to post position
     axios.post("/api/position/postPosition", {
         companyName: this.state.companyName,
         jobTitle: this.state.jobTitle,
@@ -100,6 +100,12 @@ class PostJob extends React.Component {
       .then((response) => {
         // Updates state with posted position
         this.setState({ postedPosition: response.data });
+        this.closeModal();
+  
+        // Wait for 0.5 seconds before reloading the page
+        setTimeout(function() {
+          window.location.reload();
+        }, 100);
       })
       .catch((error) => {
         console.error("Error posting position:", error);
@@ -120,7 +126,7 @@ class PostJob extends React.Component {
               className="PostJob-description"
               style={{ textAlign: "center" }}
             >
-              <p>Start by creating a position to compare your candidates</p>
+              <p>Start by creating a position to compare your candidates.</p>
               <button
                 onClick={this.openModal}
                 style={{

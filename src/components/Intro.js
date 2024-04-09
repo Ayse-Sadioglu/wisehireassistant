@@ -34,7 +34,7 @@ class Intro extends React.Component {
         <FadeInSection>
           {/*<div className="intro-subtitle">Elevate Your Recruitment Game with AI</div>*/}
           <div className="intro-desc">
-          Step into the future of recruitment with our AI-powered assistant.Revolutionize the way you hire by letting our smart system analyze resumes and enhance your hiring process.Upload your CV now and discover your perfect match!
+          Step into the future of recruitment with our AI-powered assistant. Revolutionize the way you hire by letting our smart system analyze resumes and enhance your hiring process. Upload CVs of your candidates now and discover your perfect match!
 
 
           </div>
